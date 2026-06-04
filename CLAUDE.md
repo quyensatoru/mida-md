@@ -13,13 +13,13 @@ This plugin provides coding skills for the MIDA workspace. Each skill covers one
 | `mida-skills:mida-recorder` | `mida-recorder/` | Modifying session recording ping/tracker: middleware chain, quota, VIP queue routing |
 | `mida-skills:mida-search` | `mida-search/` | Modifying Elasticsearch indexing, query services, or backup queue consumers |
 | `mida-skills:mida-mcp` | `mida-mcp/` | Adding or modifying MCP tools, services, Redis cache, or output formatters |
-| `mida-skills:code-extension` | `code-extension/` | Modifying Shopify extension modules, liquid blocks, webpack config, or web pixel |
+| `mida-skills:mida-extension` | `mida-extension/` | Modifying Shopify extension modules, liquid blocks, webpack config, or web pixel |
 
 ## Quick Reference
 
 ### Module systems
 - **CommonJS** (`require`/`module.exports`): `mida-api`, `mida-hm`, `mida-recorder`, `mida-search`
-- **ESM** (`import`/`export`): `mida-proxy`, `mida-mcp`, `code-extension`
+- **ESM** (`import`/`export`): `mida-proxy`, `mida-mcp`, `mida-extension`
 - **React/JSX**: `mida-cms`
 
 ### Auth patterns by repo

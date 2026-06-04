@@ -1,23 +1,23 @@
 ---
-name: code-extension
-description: Use when changing, reviewing, or adding code in the code-extension repository — Shopify theme app extension (liquid blocks, recorder/survey/GDPR modules), web pixel extension, webpack build config, rrweb customization, or the local Koa static server.
+name: mida-extension
+description: Use when changing, reviewing, or adding code in the mida-extension repository — Shopify theme app extension (liquid blocks, recorder/survey/GDPR modules), web pixel extension, webpack build config, rrweb customization, or the local Koa static server.
 ---
 
 # MIDA Code Extension Pattern
 
-Use this skill before modifying `code-extension`. This is a **Shopify Extension** (Webpack + vanilla JS) that injects session recording, survey, GDPR consent, and heatmap tracking into merchant storefronts.
+Use this skill before modifying `mida-extension`. This is a **Shopify Extension** (Webpack + vanilla JS) that injects session recording, survey, GDPR consent, and heatmap tracking into merchant storefronts.
 
 ## Read First
 
 ```sh
-find code-extension -maxdepth 4 -type f | grep -v node_modules | sort
-git -C code-extension status --short
+find mida-extension -maxdepth 4 -type f | grep -v node_modules | sort
+git -C mida-extension status --short
 ```
 
 ## Repo Shape
 
 ```
-code-extension/
+mida-extension/
 ├── extensions/
 │   ├── theme-app-extension/
 │   │   ├── blocks/

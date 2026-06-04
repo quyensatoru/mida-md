@@ -35,7 +35,7 @@ Sau khi install, skills xuất hiện dưới dạng:
 - `mida-skills:mida-recorder`
 - `mida-skills:mida-search`
 - `mida-skills:mida-mcp`
-- `mida-skills:code-extension`
+- `mida-skills:mida-extension`
 
 **Update plugin khi có skill mới:**
 ```sh
@@ -101,7 +101,7 @@ Copy the relevant `skills/<repo>/SKILL.md` content into the editor's custom inst
 | `mida-recorder` | `mida-recorder/` | CommonJS / Koa / Mongoose / GeoIP | Session recorder: ping, quota, VIP queue sharding |
 | `mida-search` | `mida-search/` | CommonJS / Express / Elasticsearch | Search indexing: ES queries, queue consumers |
 | `mida-mcp` | `mida-mcp/` | ESM / Express / MCP SDK | AI tools server: tool definitions, multi-shard models |
-| `code-extension` | `code-extension/` | Vanilla JS / Webpack / Liquid | Shopify extension: recorder/survey modules, web pixel |
+| `mida-extension` | `mida-extension/` | Vanilla JS / Webpack / Liquid | Shopify extension: recorder/survey modules, web pixel |
 
 ---
 
@@ -127,7 +127,7 @@ Copy the relevant `skills/<repo>/SKILL.md` content into the editor's custom inst
     ├── mida-recorder/SKILL.md
     ├── mida-search/SKILL.md
     ├── mida-mcp/SKILL.md
-    └── code-extension/SKILL.md
+    └── mida-extension/SKILL.md
 ```
 
 ---
@@ -136,7 +136,7 @@ Copy the relevant `skills/<repo>/SKILL.md` content into the editor's custom inst
 
 ### Module systems
 - **CommonJS** (`require`/`module.exports`): `mida-api`, `mida-hm`, `mida-recorder`, `mida-search`
-- **ESM** (`import`/`export`): `mida-proxy`, `mida-mcp`, `code-extension`
+- **ESM** (`import`/`export`): `mida-proxy`, `mida-mcp`, `mida-extension`
 - **React/JSX**: `mida-cms`
 
 ### Auth patterns
