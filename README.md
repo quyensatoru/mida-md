@@ -8,17 +8,17 @@ Coding skills for all MIDA workspace repos. Covers architecture patterns, naming
 
 ### Claude Code
 
-**Option 1 — Install from local path (local dev):**
+**Bước 1 — Add marketplace (1 lần duy nhất):**
 ```sh
-claude plugin install /home/bss-group/BSS/mida/.agents
+claude plugin marketplace add quyensatoru/mida-md
 ```
 
-**Option 2 — Install from Git repo (team):**
+**Bước 2 — Install plugin:**
 ```sh
-claude plugin install github.com/quyensatoru/mida-md
+claude plugin install mida-skills
 ```
 
-**Enable in project settings** (`.claude/settings.json`):
+**Bước 3 — Enable trong project** (`.claude/settings.json`):
 ```json
 {
   "enabledPlugins": {
@@ -27,11 +27,25 @@ claude plugin install github.com/quyensatoru/mida-md
 }
 ```
 
-After install, skills appear in Claude Code as:
+Sau khi install, skills xuất hiện dưới dạng:
 - `mida-skills:mida-api`
 - `mida-skills:mida-cms`
 - `mida-skills:mida-hm`
-- ... (8 skills total)
+- `mida-skills:mida-proxy`
+- `mida-skills:mida-recorder`
+- `mida-skills:mida-search`
+- `mida-skills:mida-mcp`
+- `mida-skills:code-extension`
+
+**Update plugin khi có skill mới:**
+```sh
+claude plugin update mida-skills
+```
+
+**Local dev (không cần marketplace):**
+```sh
+claude plugin install /path/to/mida/.agents
+```
 
 ---
 
