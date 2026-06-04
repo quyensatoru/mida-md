@@ -15,10 +15,7 @@ claude plugin install /home/bss-group/BSS/mida/.agents
 
 **Option 2 — Install from Git repo (team):**
 ```sh
-# After pushing .agents/ as a separate repo or as a path inside mida repo:
-claude plugin install github.com/bsscommerce/mida-skills
-# Or with subdirectory path:
-claude plugin install git+https://github.com/bsscommerce/mida.git#path=.agents
+claude plugin install github.com/quyensatoru/mida-md
 ```
 
 **Enable in project settings** (`.claude/settings.json`):
