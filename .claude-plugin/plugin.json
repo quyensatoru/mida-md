@@ -1,0 +1,21 @@
+{
+  "name": "mida-skills",
+  "description": "Coding skills for MIDA workspace: architecture patterns, conventions, and strict rules for all 8 repos (mida-api, mida-cms, mida-hm, mida-proxy, mida-recorder, mida-search, mida-mcp, code-extension)",
+  "version": "1.0.0",
+  "author": {
+    "name": "BSS Commerce",
+    "email": "quyenpv@bsscommerce.com"
+  },
+  "homepage": "https://github.com/quyensatoru/mida-md",
+  "repository": "https://github.com/quyensatoru/mida-md",
+  "license": "UNLICENSED",
+  "keywords": [
+    "mida",
+    "shopify",
+    "koa",
+    "react",
+    "elasticsearch",
+    "patterns",
+    "conventions"
+  ]
+}
