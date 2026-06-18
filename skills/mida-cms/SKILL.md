@@ -269,6 +269,87 @@ Pages are auto-discovered via `import.meta.globEager('./pages/**/index.jsx')` in
 6. **Page** → `pages/feature/index.jsx` (auto-discovered)
 7. **Constants** → `consts/Feature.const.js`
 
+## Figma → Polaris Workflow
+
+When a task involves converting Figma designs to Shopify Polaris UI, use both MCPs in sequence:
+
+### 1. Figma MCP — Read Design Nodes
+
+The Figma MCP (`mcp__claude_ai_Figma__*`) is available in Claude Code. Authenticate first, then read the design:
+
+- Authenticate: use `mcp__claude_ai_Figma__authenticate` if not yet connected
+- Fetch file/frame: use the Figma file URL or node ID provided by the user
+- Extract from each node: layout direction, spacing/padding/gap values, component names, colors, typography, border radius
+
+### 2. Shopify Dev MCP — Validate Polaris Components
+
+The Shopify Dev MCP provides authoritative Polaris component guidance. Configure it in the project's `.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "shopify-dev-mcp": {
+      "command": "npx",
+      "args": ["-y", "@shopify/dev-mcp@latest"]
+    }
+  }
+}
+```
+
+After configuration, use the MCP tools to:
+- Get correct Polaris component props and usage for the target surface (App Home, Admin UI extension)
+- Validate that the generated component tree follows Polaris patterns
+
+### 3. Figma → Polaris Mapping Rules
+
+| Figma concept | Polaris equivalent |
+|---|---|
+| Frame / top-level container | `<Page>` |
+| Card / section | `<Card>` |
+| Auto layout — vertical | `<BlockStack gap="N">` |
+| Auto layout — horizontal | `<InlineStack gap="N">` |
+| Divider / separator | `<Divider>` |
+| Text (heading) | `<Text as="h2" variant="headingMd">` |
+| Text (body) | `<Text as="p" variant="bodyMd">` |
+| Text (label) | `<Text as="span" variant="bodySm" tone="subdued">` |
+| Primary button | `<Button variant="primary">` |
+| Secondary button | `<Button>` |
+| Destructive button | `<Button tone="critical">` |
+| Text input | `<TextField label="..." />` |
+| Select / dropdown | `<Select label="..." options={...} />` |
+| Checkbox | `<Checkbox label="..." />` |
+| Toggle / switch | `<Checkbox label="..." checked={...} />` |
+| Badge / tag | `<Badge tone="...">` |
+| Banner / alert | `<Banner tone="info\|success\|warning\|critical">` |
+| Data table | `<DataTable>` |
+| Thumbnail / avatar | `<Avatar>` or `<Thumbnail>` |
+| Spinner / loading | `<Spinner>` or `<SkeletonBodyText>` |
+| Tooltip | `<Tooltip content="...">` |
+| Modal / dialog | `<Modal>` |
+| Tabs | `<Tabs>` |
+
+**Spacing token mapping (Figma px → Polaris gap/space token):**
+
+| Figma spacing | Polaris token |
+|---|---|
+| 4px | `"100"` |
+| 8px | `"200"` |
+| 12px | `"300"` |
+| 16px | `"400"` |
+| 20px | `"500"` |
+| 24px | `"600"` |
+| 32px | `"800"` |
+| 40px | `"1000"` |
+| 48px | `"1200"` |
+
+### 4. Conversion Output Standard
+
+Generated components must:
+- Use only `@shopify/polaris 12` components — no custom layout primitives
+- Apply Polaris space tokens for all gap/padding — never raw `px` values in JSX
+- Use CSS Modules only for styles not achievable with Polaris tokens
+- Follow the component pattern in this skill (default export, CSS Modules, `clsx`)
+
 ## Strict Rules
 
 - Do **not** use custom UI components where Polaris equivalents exist

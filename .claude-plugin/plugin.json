@@ -1,7 +1,7 @@
 {
   "name": "mida-skills",
   "description": "Coding skills for MIDA workspace: architecture patterns, conventions, and strict rules for all 8 repos (mida-api, mida-cms, mida-hm, mida-proxy, mida-recorder, mida-search, mida-mcp, mida-extension)",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "BSS Commerce",
     "email": "quyenpv@bsscommerce.com"
@@ -17,5 +17,20 @@
     "elasticsearch",
     "patterns",
     "conventions"
-  ]
+  ],
+  "mcpServers": {
+    "figma-developer-mcp": {
+      "command": "npx",
+      "args": ["-y", "figma-developer-mcp", "--stdio"],
+      "env": {
+        "FIGMA_API_KEY": "${FIGMA_API_KEY}"
+      },
+      "description": "Figma MCP — read Figma nodes, frames, components and extract design specs for Figma-to-Polaris conversion"
+    },
+    "shopify-dev-mcp": {
+      "command": "npx",
+      "args": ["-y", "@shopify/dev-mcp@latest"],
+      "description": "Shopify Polaris MCP — component recommendations and validation for App Home, Admin UI, Checkout UI extensions"
+    }
+  }
 }
