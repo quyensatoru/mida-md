@@ -1,54 +1,37 @@
 #!/usr/bin/env bash
 # SessionStart hook — check MCP credentials for mida-skills plugin
 
-set -euo pipefail
-
 SETTINGS_LOCAL="${HOME}/.claude/settings.local.json"
 
-# Read current env block from settings.local.json
 get_env_value() {
-  local key="$1"
   node -e "
     try {
       const s = JSON.parse(require('fs').readFileSync('${SETTINGS_LOCAL}', 'utf8'));
-      process.stdout.write(s.env && s.env['${key}'] ? s.env['${key}'] : '');
+      process.stdout.write((s.env && s.env['$1']) ? 'ok' : '');
     } catch { process.stdout.write(''); }
-  " 2>/dev/null || echo ""
+  " 2>/dev/null || true
 }
 
 missing=()
-
-[ -z "$(get_env_value FIGMA_API_KEY)" ]    && missing+=("FIGMA_API_KEY (Figma Developer MCP)")
-[ -z "$(get_env_value JIRA_URL)" ]         && missing+=("JIRA_URL (Jira MCP)")
-[ -z "$(get_env_value JIRA_USERNAME)" ]    && missing+=("JIRA_USERNAME (Jira MCP)")
-[ -z "$(get_env_value JIRA_API_TOKEN)" ]   && missing+=("JIRA_API_TOKEN (Jira MCP)")
+[ -z "$(get_env_value FIGMA_API_KEY)" ]  && missing+=("FIGMA_API_KEY")
+[ -z "$(get_env_value JIRA_URL)" ]        && missing+=("JIRA_URL")
+[ -z "$(get_env_value JIRA_USERNAME)" ]   && missing+=("JIRA_USERNAME")
+[ -z "$(get_env_value JIRA_API_TOKEN)" ]  && missing+=("JIRA_API_TOKEN")
 
 # All set — exit silently
-if [ ${#missing[@]} -eq 0 ]; then
-  exit 0
-fi
+[ ${#missing[@]} -eq 0 ] && exit 0
 
-# Build warning message
-missing_list=""
-for item in "${missing[@]}"; do
-  missing_list="${missing_list}- ${item}\\n"
-done
+# Build plain message (no complex escaping)
+msg="[mida-skills] MCP credentials missing: ${missing[*]}. Ask the user to run: bash .agents/scripts/setup-mcp.sh — then restart Claude Code."
 
-context="<mida-skills-mcp-setup>\\nSome MCP credentials for mida-skills are not configured yet:\\n${missing_list}\\nPlease inform the user at the start of the session:\\n1. Tell them which credentials are missing (list above)\\n2. Ask them to run the setup script to configure: bash ~/.claude/plugins/cache/mida-skills-marketplace/mida-skills/\\$(claude plugin list 2>/dev/null | grep mida-skills | grep -o '[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+')/scripts/setup-mcp.sh\\n   Or shorter path if working in the MIDA repo: bash .agents/scripts/setup-mcp.sh\\n3. After setup, ask them to restart Claude Code to activate the MCP servers\\nDo NOT block other work — just mention it once at session start.\\n</mida-skills-mcp-setup>"
+# Escape for JSON
+escaped="${msg//\\/\\\\}"
+escaped="${escaped//\"/\\\"}"
 
-escape_for_json() {
-  local s="$1"
-  s="${s//\\/\\\\}"
-  s="${s//\"/\\\"}"
-  printf '%s' "$s"
-}
-
-context_escaped=$(escape_for_json "$context")
-
-if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [ -z "${COPILOT_CLI:-}" ]; then
-  printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$context_escaped"
+if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
+  printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}\n' "$escaped"
 else
-  printf '{\n  "additionalContext": "%s"\n}\n' "$context_escaped"
+  printf '{"additionalContext":"%s"}\n' "$escaped"
 fi
 
 exit 0
