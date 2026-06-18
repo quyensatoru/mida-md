@@ -27,6 +27,24 @@ claude plugin install mida-skills
 }
 ```
 
+**Bước 4 — Setup Figma API key (1 lần duy nhất, cho Figma MCP):**
+```sh
+bash .agents/scripts/setup-mcp.sh
+```
+
+Script sẽ hỏi Figma Personal Access Token và tự ghi vào `~/.claude/settings.local.json`:
+```json
+{
+  "env": {
+    "FIGMA_API_KEY": "fig-xxxxxxx..."
+  }
+}
+```
+
+> **Lấy token:** Figma → Account Settings → Security → Personal access tokens → tạo token với scope **File content (read)**.
+>
+> **Không cần script:** Có thể tự add thủ công vào `~/.claude/settings.local.json` theo format trên. File này không commit vào git (add vào `.gitignore`).
+
 Sau khi install, skills xuất hiện dưới dạng:
 - `mida-skills:mida-api`
 - `mida-skills:mida-cms`
@@ -110,18 +128,20 @@ Copy the relevant `skills/<repo>/SKILL.md` content into the editor's custom inst
 ```
 .agents/
 ├── .claude-plugin/
-│   ├── plugin.json          # Claude Code manifest
+│   ├── plugin.json          # Claude Code manifest (mcpServers: figma + shopify)
 │   └── marketplace.json     # Claude marketplace listing
 ├── .codex-plugin/
 │   └── plugin.json          # Codex manifest
 ├── gemini-extension.json    # Gemini CLI extension
+├── scripts/
+│   └── setup-mcp.sh         # One-time MCP setup: prompts FIGMA_API_KEY → ~/.claude/settings.local.json
 ├── CLAUDE.md                # Claude Code context
 ├── GEMINI.md                # Gemini CLI context
 ├── package.json             # npm package
 ├── README.md                # This file
 └── skills/
     ├── mida-api/SKILL.md
-    ├── mida-cms/SKILL.md
+    ├── mida-cms/SKILL.md    # Includes Figma → Polaris workflow
     ├── mida-hm/SKILL.md
     ├── mida-proxy/SKILL.md
     ├── mida-recorder/SKILL.md
