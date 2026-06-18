@@ -13,20 +13,16 @@ get_env_value() {
 }
 
 missing=()
-[ -z "$(get_env_value FIGMA_API_KEY)" ]  && missing+=("FIGMA_API_KEY")
-[ -z "$(get_env_value JIRA_URL)" ]        && missing+=("JIRA_URL")
-[ -z "$(get_env_value JIRA_USERNAME)" ]   && missing+=("JIRA_USERNAME")
-[ -z "$(get_env_value JIRA_API_TOKEN)" ]  && missing+=("JIRA_API_TOKEN")
+[ -z "$(get_env_value FIGMA_API_KEY)" ] && missing+=("FIGMA_API_KEY")
 
 # All credentials present — exit silently
 [ ${#missing[@]} -eq 0 ] && exit 0
 
-# Build setup instructions for Claude to act as wizard
 read -r -d '' msg << 'ENDMSG' || true
 <mida-skills-setup>
 IMPORTANT — MCP credentials are missing. You MUST run this setup now, before doing anything else:
 
-1. Tell the user: "Chào! Plugin mida-skills cần cấu hình API keys cho MCP servers. Tôi sẽ hỏi từng bước."
+1. Tell the user: "Chào! Plugin mida-skills cần cấu hình API key cho Figma MCP. Tôi sẽ hỏi từng bước."
 
 2. For each missing credential below, ask the user ONE AT A TIME and wait for their answer:
 
@@ -34,29 +30,24 @@ MISSING_PLACEHOLDER
 
    Credential details:
    - FIGMA_API_KEY: Figma → Account Settings → Security → Personal access tokens → Create token (scope: File content read). Value starts with "figd_"
-   - JIRA_URL: The Atlassian workspace URL, e.g. https://yourcompany.atlassian.net
-   - JIRA_USERNAME: The Atlassian account email address
-   - JIRA_API_TOKEN: https://id.atlassian.com/manage-profile/security/api-tokens → Create API token
 
 3. After collecting ALL missing values, write them to ~/.claude/settings.local.json using the Edit or Write tool:
    - Read the current file first (it may already have some values)
    - Add the new keys under the "env" object
    - Keep existing values intact
 
-4. Tell the user: "Setup xong! Restart Claude Code để các MCP servers kết nối."
+4. Tell the user: "Setup xong! Restart Claude Code để Figma MCP kết nối."
 
 Do NOT skip this setup. Do NOT proceed with other tasks until setup is complete or user explicitly says to skip.
 </mida-skills-setup>
 ENDMSG
 
-# Replace placeholder with actual missing list
 missing_str=""
 for item in "${missing[@]}"; do
   missing_str="${missing_str}   - ${item}"$'\n'
 done
 msg="${msg/MISSING_PLACEHOLDER/$missing_str}"
 
-# Escape for JSON
 escaped="${msg//\\/\\\\}"
 escaped="${escaped//\"/\\\"}"
 escaped="${escaped//$'\n'/\\n}"

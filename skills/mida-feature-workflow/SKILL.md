@@ -17,11 +17,13 @@ Use this skill when given a Jira ticket (e.g. `MAH-123`) to implement. It sequen
 
 ### Step 1 — Read Jira Task
 
-Use the `jira-mcp` to fetch the full issue:
+Use **Atlassian Rovo MCP** (cloud OAuth, no API token needed):
 
 ```
-get issue: <ISSUE_KEY>
+mcp__claude_ai_Atlassian_Rovo__getJiraIssue: { issueIdOrKey: "<ISSUE_KEY>" }
 ```
+
+If not authenticated: tell user to run `/mcp` → select **claude.ai Atlassian Rovo** → authenticate.
 
 Extract:
 - **Title + description** — the feature intent
@@ -110,12 +112,11 @@ If no Figma link in the Jira ticket:
 2. If yes → go to Step 2
 3. If no → skip Steps 2–3, implement based on Jira description + existing UI patterns in the codebase
 
-## When Jira MCP is Not Connected
+## When Atlassian Rovo MCP is Not Connected
 
-If `jira-mcp` returns an error or is not configured:
-1. Ask the user to describe the feature requirements
-2. If they provide a Figma link → go to Step 2
-3. Proceed with available context
+1. Tell user: run `/mcp` → select **claude.ai Atlassian Rovo** → authenticate
+2. After auth, retry Step 1
+3. If user cannot authenticate: ask them to describe requirements manually, proceed with available context
 
 ## Strict Rules
 

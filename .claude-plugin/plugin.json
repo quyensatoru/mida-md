@@ -1,7 +1,7 @@
 {
   "name": "mida-skills",
   "description": "Coding skills for MIDA workspace: architecture patterns, conventions, and strict rules for all 8 repos (mida-api, mida-cms, mida-hm, mida-proxy, mida-recorder, mida-search, mida-mcp, mida-extension)",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "author": {
     "name": "BSS Commerce",
     "email": "quyenpv@bsscommerce.com"
@@ -31,16 +31,6 @@
       "command": "npx",
       "args": ["-y", "@shopify/dev-mcp@latest"],
       "description": "Shopify Polaris MCP — component recommendations and validation for App Home, Admin UI, Checkout UI extensions"
-    },
-    "jira-mcp": {
-      "command": "npx",
-      "args": ["-y", "mcp-atlassian"],
-      "env": {
-        "JIRA_URL": "${JIRA_URL}",
-        "JIRA_USERNAME": "${JIRA_USERNAME}",
-        "JIRA_API_TOKEN": "${JIRA_API_TOKEN}"
-      },
-      "description": "Jira MCP — search issues, get issue details, create/update issues, manage sprints"
     }
   }
 }
