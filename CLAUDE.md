@@ -6,6 +6,7 @@ This plugin provides coding skills for the MIDA workspace. Each skill covers one
 
 | Skill | Trigger repo | Use when |
 |---|---|---|
+| `mida-skills:mida-feature-workflow` | any | **Starting a new feature from a Jira ticket** — orchestrates Jira → Figma → Shopify Dev MCP → repo skill |
 | `mida-skills:mida-api` | `mida-api/` | Modifying routes, controllers, services, models, queues, jobs, or automation in the main Koa/Mongoose backend |
 | `mida-skills:mida-cms` | `mida-cms/` | Modifying React/Redux frontend pages, components, hooks, services, or Polaris UI |
 | `mida-skills:mida-hm` | `mida-hm/` | Modifying heatmap service: ClickHouse queries, aggregations, SSE streaming, queue consumers |
